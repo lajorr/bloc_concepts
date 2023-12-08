@@ -5,11 +5,18 @@ part of 'counter_cubit.dart';
 
 // this is where the state variables are declared??
 
-class CounterState {
-  int counter;
-  bool? wasIncremented;
-  CounterState({
+class CounterState extends Equatable {
+  final int counter;
+  final bool? wasIncremented;
+  const CounterState({
     required this.counter,
     this.wasIncremented,
   });
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        counter,
+        wasIncremented,
+      ];
 }
