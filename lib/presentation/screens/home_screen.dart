@@ -19,106 +19,118 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BlocBuilder<InternetCubit, InternetState>(
-              builder: (context, state) {
-                if (state is InternetConnected &&
-                    state.connectionType == ConnectionType.wifi) {
-                  return const Text('Wifi');
-                } else if (state is InternetConnected &&
-                    state.connectionType == ConnectionType.mobile) {
-                  return const Text('Mobile');
-                } else if (state is InternetDisconnected) {
-                  return const Text('No Internet ');
-                }
-                return const CircularProgressIndicator();
-              },
-            ),
-            BlocConsumer<CounterCubit, CounterState>(
-              listener: (context, state) {
-                if (state.wasIncremented == true) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Incremented',
+    return BlocListener<InternetCubit, InternetState>(
+      listener: (context, state) {
+        // TODO: implement listener
+        if (state is InternetConnected &&
+            state.connectionType == ConnectionType.wifi) {
+          BlocProvider.of<CounterCubit>(context).increment();
+        } else if (state is InternetConnected &&
+            state.connectionType == ConnectionType.mobile) {
+          BlocProvider.of<CounterCubit>(context).decrement();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BlocBuilder<InternetCubit, InternetState>(
+                builder: (context, state) {
+                  if (state is InternetConnected &&
+                      state.connectionType == ConnectionType.wifi) {
+                    return const Text('Wifi');
+                  } else if (state is InternetConnected &&
+                      state.connectionType == ConnectionType.mobile) {
+                    return const Text('Mobile');
+                  } else if (state is InternetDisconnected) {
+                    return const Text('No Internet ');
+                  }
+                  return const CircularProgressIndicator();
+                },
+              ),
+              BlocConsumer<CounterCubit, CounterState>(
+                listener: (context, state) {
+                  if (state.wasIncremented == true) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Incremented',
+                        ),
+                        duration: Duration(
+                          milliseconds: 300,
+                        ),
                       ),
-                      duration: Duration(
-                        milliseconds: 300,
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Decremented',
+                        ),
+                        duration: Duration(
+                          milliseconds: 300,
+                        ),
                       ),
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  return Text(
+                    state.counter.toString(),
+                    style: const TextStyle(
+                      fontSize: 32,
                     ),
                   );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Decremented',
-                      ),
-                      duration: Duration(
-                        milliseconds: 300,
-                      ),
-                    ),
-                  );
-                }
-              },
-              builder: (context, state) {
-                return Text(
-                  state.counter.toString(),
-                  style: const TextStyle(
-                    fontSize: 32,
-                  ),
-                );
-              },
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   children: [
-            //     FloatingActionButton(
-            //       onPressed: () {
-            //         BlocProvider.of<CounterCubit>(context).decrement();
-            //       },
-            //       tooltip: 'Decrement',
-            //       child: const Icon(
-            //         Icons.remove,
-            //       ),
-            //     ),
-            //     FloatingActionButton(
-            //       onPressed: () {
-            //         BlocProvider.of<CounterCubit>(context).increment();
-            //       },
-            //       tooltip: 'Increment',
-            //       child: const Icon(
-            //         Icons.add,
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            
-            const SizedBox(
-              height: 24,
-            ),
-            MaterialButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(SecondScreen.routeName);
-              },
-              color: color,
-              child: const Text('Second'),
-            ),
-            MaterialButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(ThirdScreen.routeName);
-              },
-              color: color,
-              child: const Text('Third'),
-            ),
-          ],
+                },
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: [
+              //     FloatingActionButton(
+              //       onPressed: () {
+              //         BlocProvider.of<CounterCubit>(context).decrement();
+              //       },
+              //       tooltip: 'Decrement',
+              //       child: const Icon(
+              //         Icons.remove,
+              //       ),
+              //     ),
+              //     FloatingActionButton(
+              //       onPressed: () {
+              //         BlocProvider.of<CounterCubit>(context).increment();
+              //       },
+              //       tooltip: 'Increment',
+              //       child: const Icon(
+              //         Icons.add,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+
+              const SizedBox(
+                height: 24,
+              ),
+              MaterialButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(SecondScreen.routeName);
+                },
+                color: color,
+                child: const Text('Second'),
+              ),
+              MaterialButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(ThirdScreen.routeName);
+                },
+                color: color,
+                child: const Text('Third'),
+              ),
+            ],
+          ),
         ),
       ),
     );
