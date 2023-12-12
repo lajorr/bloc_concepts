@@ -90,14 +90,7 @@ class SecondScreen extends StatelessWidget {
             ),
             MaterialButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ThirdScreen(
-                      title: 'third',
-                      color: Colors.amber,
-                    ),
-                  ),
-                );
+                Navigator.of(context).pushNamed(ThirdScreen.routeName);
               },
               color: color,
               child: const Text('Next'),
