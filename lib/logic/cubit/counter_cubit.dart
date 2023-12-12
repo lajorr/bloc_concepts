@@ -1,11 +1,13 @@
-import 'package:bloc/bloc.dart';
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'counter_state.dart';
 
 // this is where the functions are  defined ??
 
-class CounterCubit extends Cubit<CounterState> {
+class CounterCubit extends Cubit<CounterState> with HydratedMixin {
   // final InternetCubit internetCubit;
   // StreamSubscription?
   //     internetStreamSubscription; // manually close garnu parxa !!
@@ -55,5 +57,14 @@ class CounterCubit extends Cubit<CounterState> {
         ),
       );
 
-  
+  @override
+  CounterState? fromJson(Map<String, dynamic> json) {
+    return CounterState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(CounterState state) {
+    // this function is called for each change in state..
+    return state.toMap();
+  }
 }

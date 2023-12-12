@@ -21,14 +21,16 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<InternetCubit, InternetState>(
       listener: (context, state) {
-        // TODO: implement listener
-        if (state is InternetConnected &&
-            state.connectionType == ConnectionType.wifi) {
-          BlocProvider.of<CounterCubit>(context).increment();
-        } else if (state is InternetConnected &&
-            state.connectionType == ConnectionType.mobile) {
-          BlocProvider.of<CounterCubit>(context).decrement();
-        }
+        // // TODO: implement listener
+        // if (state is InternetConnected &&
+        //     state.connectionType == ConnectionType.wifi) {
+        //   BlocProvider.of<CounterCubit>(context).increment();
+        // } else if (state is InternetConnected &&
+        //     state.connectionType == ConnectionType.mobile) {
+        //   // BlocProvider.of<CounterCubit>(context).decrement();
+        //   context.read<CounterCubit>().decrement(); // --- this also works  
+          
+        // }
       },
       child: Scaffold(
         appBar: AppBar(),
@@ -88,29 +90,29 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 50,
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //   children: [
-              //     FloatingActionButton(
-              //       onPressed: () {
-              //         BlocProvider.of<CounterCubit>(context).decrement();
-              //       },
-              //       tooltip: 'Decrement',
-              //       child: const Icon(
-              //         Icons.remove,
-              //       ),
-              //     ),
-              //     FloatingActionButton(
-              //       onPressed: () {
-              //         BlocProvider.of<CounterCubit>(context).increment();
-              //       },
-              //       tooltip: 'Increment',
-              //       child: const Icon(
-              //         Icons.add,
-              //       ),
-              //     ),
-              //   ],
-              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FloatingActionButton(
+                    onPressed: () {
+                      BlocProvider.of<CounterCubit>(context).decrement();
+                    },
+                    tooltip: 'Decrement',
+                    child: const Icon(
+                      Icons.remove,
+                    ),
+                  ),
+                  FloatingActionButton(
+                    onPressed: () {
+                      BlocProvider.of<CounterCubit>(context).increment();
+                    },
+                    tooltip: 'Increment',
+                    child: const Icon(
+                      Icons.add,
+                    ),
+                  ),
+                ],
+              ),
 
               const SizedBox(
                 height: 24,
